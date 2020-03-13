@@ -32,7 +32,7 @@ export default class Activities extends JetView {
 			scroll: "auto",
 			columns: [
 				{id: "State", header: "", template: "{common.checkbox()}", checkValue: "Close", uncheckValue: "Open", width: 50},
-				{id: "TypeID", header: ["Activity type", {content: "selectFilter"}], collection: activitiesTypes, sort: "string"},
+				{id: "TypeID", header: ["Activity type", {content: "selectFilter"}], collection: activitiesTypes, sort: "text"},
 				{id: "DueDate", header: ["Due Date", {content: "datepickerFilter"}], format: webix.i18n.longDateFormatStr, sort: "date", width: 150, editor: "date"},
 				{id: "Details", header: ["Details", {content: "textFilter"}], template: "#Details#", fillspace: true, sort: "string"},
 				{id: "ContactID", header: ["Contact", {content: "selectFilter"}], width: 150, options: contacts, sort: "string"},
