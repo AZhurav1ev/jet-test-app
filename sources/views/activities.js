@@ -80,7 +80,6 @@ export default class Activities extends JetView {
 	}
 
 	showForm() {
-		const value = this.$$("addButton").getValue();
-		this.activityForm.showForm(false, value);
+		this.activityForm.showForm(false, "Add");
 	}
 }

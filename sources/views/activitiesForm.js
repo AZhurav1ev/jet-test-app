@@ -17,13 +17,13 @@ export default class ActivitiesForm extends JetView {
 				view: "form",
 				localId: "activitiesForm",
 				elements: [
-					{view: "textarea", label: "Details", name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: "Please write some details"},
-					{view: "combo", label: "Type", name: "TypeID", options: activitiesTypes, invalidMessage: "Please select type"},
-					{view: "combo", label: "Contact", name: "ContactID", options: contacts, invalidMessage: "Please select contact"},
+					{view: "textarea", label: "Details", name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: "Please write some details", required: true},
+					{view: "combo", label: "Type", name: "TypeID", options: activitiesTypes, invalidMessage: "Please select type", required: true},
+					{view: "combo", label: "Contact", name: "ContactID", options: contacts, invalidMessage: "Please select contact", required: true},
 					{
 						cols: [
-							{view: "datepicker", format: webix.i18n.longDateFormatStr, name: "DueDate", invalidMessage: "Please select date"},
-							{view: "datepicker", type: "time", format: webix.i18n.timeFormat, name: "DueTime", invalidMessage: "Please select time"}
+							{view: "datepicker", format: webix.i18n.longDateFormatStr, name: "DueDate", invalidMessage: "Please select date", required: true},
+							{view: "datepicker", type: "time", format: webix.i18n.timeFormat, name: "DueTime", invalidMessage: "Please select time", required: true}
 						]
 					},
 					{view: "checkbox", label: "Completed", name: "State", checkValue: "Close", uncheckValue: "Open"},
@@ -34,28 +34,24 @@ export default class ActivitiesForm extends JetView {
 							{view: "button", label: "Cancel", css: "webix_primary", autoWidth: true, click: () => this.closeForm()}
 						]
 					}
-				],
-				rules: {
-					$all: webix.rules.isNotEmpty
-				}
+				]
 			}
 		};
 	}
 
-	showForm(id, value) {
+	showForm(id, value = false) {
 		const form = this.$$("activitiesForm");
 		const header = this.$$("header");
 		const button = this.$$("actionButton");
-		const action = value === "Add" ? "Add" : "Edit";
+		const action = value ? "Add" : "Edit";
 
 		if (id && activities.exists(id)) {
 			const item = activities.getItem(id);
 			this.getRoot().show();
 			form.setValues(item);
 		}
-		else {
-			this.getRoot().show();
-		}
+
+		this.getRoot().show();
 
 		header.setValues({action});
 		button.setValue(action);

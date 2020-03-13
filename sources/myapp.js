@@ -20,7 +20,8 @@ if (!BUILD_AS_MODULE) {
 		let app = new MyApp();
 		app.render();
 		app.attachEvent("app:error:resolve", () => {
-			webix.delay(() => app.show("/top/contacts"));
+			webix.delay(() => app.show("/top/activities"));
+			webix.message("You were redirected here, because somthing went wrong with contacts page");
 		});
 	});
 }

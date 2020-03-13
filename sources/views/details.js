@@ -40,6 +40,7 @@ export default class Details extends JetView {
 					cols: [
 						{
 							view: "button",
+							disabled: true,
 							css: "webix_primary",
 							width: 100,
 							label: "Delete",
@@ -48,6 +49,7 @@ export default class Details extends JetView {
 						},
 						{
 							view: "button",
+							disabled: true,
 							css: "webix_primary",
 							width: 100,
 							label: "edit",

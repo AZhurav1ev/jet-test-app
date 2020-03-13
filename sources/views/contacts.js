@@ -69,14 +69,11 @@ export default class Contacts extends JetView {
 				id = url[1].params.id;
 			}
 			else {
-				id = false;
+				this.list.unselectAll();
 			}
 
 			if (id) {
 				this.list.select(id);
-			}
-			else {
-				this.list.unselectAll();
 			}
 		});
 	}

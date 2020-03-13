@@ -3,14 +3,14 @@
 }
 
 .user_image {
-    width: 42px;
+	width: 42px;
 	float: left;
 	padding-top: 8px;
 }
 
 .user_credentials {
-    line-height: 20px;
-    display: block;
+	line-height: 20px;
+	display: block;
 }
 
 .bgc_white {
@@ -32,13 +32,13 @@
 
 .details_contacts{
 	display: flex;
-    flex-direction: column;
-    margin-left: 15px;
+	flex-direction: column;
+	margin-left: 15px;
 }
 
 .details_contacts span{
 	margin: 12px;
-    font-size: 15px;
+	font-size: 15px;
 }
 
 .details_image img{
