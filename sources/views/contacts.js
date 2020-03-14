@@ -31,50 +31,18 @@ export default class Contacts extends JetView {
 		};
 	}
 
-	init(view, url) {
+	init() {
 		this.list = this.$$("contactsList");
 		this.list.sync(contacts);
 		this.list.attachEvent("onItemClick", (id) => {
-			this.show(`./details?id=${id}`);
+			this.setParam("id", id, true);
 		});
-		contacts.attachEvent("onAfterLoad", () => {
-			if (url.length <= 1 && this.list.getFirstId()) {
-				this.show(`./details?id=${this.list.getFirstId()}`);
-			}
-			else if (url[1].params.id) {
-				this.show(`./details?id=${url[1].params.id}`);
-			}
-			else {
-				this.show("./details");
-			}
-		});
-	}
 
-	ready(view, url) {
-		if (url.length <= 1 && this.list.getFirstId()) {
-			this.show(`./details?id=${this.list.getFirstId()}`);
-		}
-		else {
-			this.show("./details");
-		}
-	}
-
-	urlChange(view, url) {
 		contacts.waitData.then(() => {
-			let id;
-			if (url.length <= 1) {
-				id = url[0].params.id || this.list.getFirstId();
-			}
-			else if (url[1].params.id && contacts.exists(url[1].params.id)) {
-				id = url[1].params.id;
-			}
-			else {
-				this.list.unselectAll();
-			}
-
-			if (id) {
-				this.list.select(id);
-			}
+			const id = this.getParam("id") ? this.getParam("id") : this.list.getFirstId();
+			this.list.select(id);
+			this.setParam("id", id, true);
+			this.show("./details");
 		});
 	}
 }

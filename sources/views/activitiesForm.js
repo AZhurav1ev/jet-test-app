@@ -22,15 +22,15 @@ export default class ActivitiesForm extends JetView {
 					{view: "combo", label: "Contact", name: "ContactID", options: contacts, invalidMessage: "Please select contact", required: true},
 					{
 						cols: [
-							{view: "datepicker", format: webix.i18n.longDateFormatStr, name: "DueDate", invalidMessage: "Please select date", required: true},
-							{view: "datepicker", type: "time", format: webix.i18n.timeFormat, name: "DueTime", invalidMessage: "Please select time", required: true}
+							{view: "datepicker", name: "DueDate", type: "date", invalidMessage: "Please select date", required: true},
+							{view: "datepicker", name: "DueTime", type: "time", invalidMessage: "Please select time", required: true}
 						]
 					},
 					{view: "checkbox", label: "Completed", name: "State", checkValue: "Close", uncheckValue: "Open"},
 					{
 						cols: [
 							{},
-							{view: "button", value: "Add (*save)", localId: "actionButton", css: "webix_primary", autoWidth: true, click: () => this.addItem()},
+							{view: "button", value: "Add", localId: "button", css: "webix_primary", autoWidth: true, click: () => this.addItem()},
 							{view: "button", label: "Cancel", css: "webix_primary", autoWidth: true, click: () => this.closeForm()}
 						]
 					}
@@ -39,35 +39,35 @@ export default class ActivitiesForm extends JetView {
 		};
 	}
 
-	showForm(id, value = false) {
-		const form = this.$$("activitiesForm");
-		const header = this.$$("header");
-		const button = this.$$("actionButton");
-		const action = value ? "Add" : "Edit";
+	init() {
+		this.form = this.$$("activitiesForm");
+	}
 
+	showForm(id) {
 		if (id && activities.exists(id)) {
 			const item = activities.getItem(id);
-			this.getRoot().show();
-			form.setValues(item);
+			this.form.setValues(item);
 		}
 
 		this.getRoot().show();
 
-		header.setValues({action});
-		button.setValue(action);
+		const action = id ? "Edit" : "Add";
+		this.$$("header").setValues({action});
+		this.$$("button").setValue(action);
 	}
 
 	closeForm() {
-		const form = this.$$("activitiesForm");
-		form.clear();
-		form.clearValidation();
+		this.form.clear();
+		this.form.clearValidation();
 		this.getRoot().hide();
 	}
 
 	addItem() {
-		const form = this.$$("activitiesForm");
-		if (form.validate()) {
-			const itemData = form.getValues();
+		if (this.form.validate()) {
+			const itemData = this.form.getValues();
+			const dateToStr = webix.Date.dateToStr("%Y-%m-%d");
+			const timeToStr = webix.Date.dateToStr("%H:%i");
+			itemData.DueDate = `${dateToStr(itemData.DueDate)} ${timeToStr(itemData.DueTime)}`;
 			if (itemData && itemData.id) {
 				activities.updateItem(itemData.id, itemData);
 			}

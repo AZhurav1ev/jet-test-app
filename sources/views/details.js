@@ -75,18 +75,17 @@ export default class Details extends JetView {
 	}
 
 	urlChange() {
-		const userDetails = this.$$("userDetails");
 		webix.promise.all([
 			contacts.waitData,
 			statuses.waitData
 		]).then(() => {
-			const id = this.getParam("id");
+			const id = this.getParam("id", true);
 			if (id && contacts.exists(id)) {
 				const contact = contacts.getItem(id);
 				if (contact.StatusID) {
 					contact.Status = statuses.getItem(contact.StatusID).State || false;
 				}
-				userDetails.setValues(contact);
+				this.$$("userDetails").setValues(contact);
 			}
 		});
 	}

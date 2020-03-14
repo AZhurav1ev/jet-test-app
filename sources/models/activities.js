@@ -1,4 +1,4 @@
-const strToDate = webix.Date.strToDate("%d-%m-%Y %H:%i");
+const strToDate = webix.Date.strToDate("%Y-%m-%d %H:%i");
 const dateToStr = webix.Date.dateToStr("%Y-%m-%d %H:%i");
 
 export const activities = new webix.DataCollection({
@@ -7,15 +7,10 @@ export const activities = new webix.DataCollection({
 	scheme: {
 		$init: (obj) => {
 			obj.DueDate = strToDate(obj.DueDate);
-			obj.DueTime = dateToStr(obj.DueTime);
-		},
-		$change: (obj) => {
-			obj.DueDate = strToDate(obj.DueDate);
-			obj.DueTime = strToDate(obj.DueTime);
+			obj.DueTime = strToDate(obj.DueDate);
 		},
 		$save: (obj) => {
 			obj.DueDate = dateToStr(obj.DueDate);
-			obj.DueTime = dateToStr(obj.DueTime);
 		}
 	}
 });
