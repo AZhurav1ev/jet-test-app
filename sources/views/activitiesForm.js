@@ -65,9 +65,9 @@ export default class ActivitiesForm extends JetView {
 	addItem() {
 		if (this.form.validate()) {
 			const itemData = this.form.getValues();
-			const dateToStr = webix.Date.dateToStr("%Y-%m-%d");
-			const timeToStr = webix.Date.dateToStr("%H:%i");
-			itemData.DueDate = `${dateToStr(itemData.DueDate)} ${timeToStr(itemData.DueTime)}`;
+			const hours = itemData.DueTime.getHours();
+			const minutes = itemData.DueTime.getMinutes();
+			itemData.DueDate.setHours(hours, minutes);
 			if (itemData && itemData.id) {
 				activities.updateItem(itemData.id, itemData);
 			}
