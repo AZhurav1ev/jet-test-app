@@ -145,15 +145,17 @@ export default class ContactsForm extends JetView {
 	closeForm(id) {
 		this.form.clear();
 		this.form.clearValidation();
-		if (id === "Cancel") {
-			const userId = this.getParam("id", true);
+		const userId = this.getParam("id", true);
+		if (id === "Cancel" && userId) {
 			this.show(`/top/contacts?id=${userId}/details`);
 		}
 		else if (Number.isInteger(id)) {
 			this.show(`/top/contacts?id=${id}/details`);
 		}
-		const firstId = contacts.getFirstId();
-		this.show(`/top/contacts?id=${firstId}/details`);
+		else {
+			const firstId = contacts.getFirstId();
+			this.show(`/top/contacts?id=${firstId}/details`);
+		}
 	}
 
 	addContact() {
