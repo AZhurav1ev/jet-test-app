@@ -19,11 +19,11 @@ export default class ActivitiesForm extends JetView {
 				elements: [
 					{view: "textarea", label: "Details", name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: "Please write some details", required: true},
 					{view: "combo", label: "Type", name: "TypeID", options: activitiesTypes, invalidMessage: "Please select type", required: true},
-					{view: "combo", label: "Contact", name: "ContactID", options: contacts, invalidMessage: "Please select contact", required: true},
+					{view: "combo", label: "Contact", localId: "combo", value: "", name: "ContactID", options: contacts, invalidMessage: "Please select contact", required: true},
 					{
 						cols: [
-							{view: "datepicker", name: "DueDate", type: "date", invalidMessage: "Please select date", required: true},
-							{view: "datepicker", name: "DueTime", type: "time", invalidMessage: "Please select time", required: true}
+							{view: "datepicker", name: "DueDate", type: "date", value: new Date(), format: "%d  %M %Y", invalidMessage: "Please select date", required: true},
+							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: "Please select time", required: true}
 						]
 					},
 					{view: "checkbox", label: "Completed", name: "State", checkValue: "Close", uncheckValue: "Open"},
@@ -43,15 +43,19 @@ export default class ActivitiesForm extends JetView {
 		this.form = this.$$("activitiesForm");
 	}
 
-	showForm(id) {
-		if (id && activities.exists(id)) {
+	showForm(id, add) {
+		if (id && !add && activities.exists(id)) {
 			const item = activities.getItem(id);
 			this.form.setValues(item);
+		}
+		if (id && add && contacts.exists(id)) {
+			this.$$("combo").setValue(id);
+			this.$$("combo").define("readonly", true);
 		}
 
 		this.getRoot().show();
 
-		const action = id ? "Edit" : "Add";
+		const action = id && add ? "Add" : "Edit";
 		this.$$("header").setValues({action});
 		this.$$("button").setValue(action);
 	}
