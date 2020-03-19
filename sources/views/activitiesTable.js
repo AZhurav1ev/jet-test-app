@@ -133,7 +133,7 @@ export default class ActivitiesTable extends JetView {
 		]).then(() => {
 			const id = +this.getParam("id", true);
 			if (id && contacts.exists(id)) {
-				activities.data.filter(activity => Number(activity.ContactID) === id);
+				activities.data.filter(activity => +activity.ContactID === id);
 				contactsData.data.filter(data => data.ContactID === id);
 			}
 		});

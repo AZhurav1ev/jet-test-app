@@ -79,7 +79,7 @@ export default class ContactsForm extends JetView {
 		const footer = {
 			cols: [
 				{},
-				{view: "button", value: "Cancel", css: "webix_primary", width: 150, click: (id, e) => this.closeForm(e.target.innerHTML)},
+				{view: "button", value: "Cancel", css: "webix_primary", width: 150, click: () => this.cancelForm()},
 				{view: "button", localId: "button", value: "Add", css: "webix_primary", width: 150, click: () => this.addContact()}
 			]
 		};
@@ -127,6 +127,7 @@ export default class ContactsForm extends JetView {
 		]).then(() => {
 			const id = this.getParam("id", true);
 			const action = id ? "Edit" : "Add";
+			const buttonAction = action === "Edit" ? "Save" : "Add";
 			if (id && contacts.exists(id)) {
 				const item = contacts.getItem(id);
 				this.form.setValues(item);
@@ -138,24 +139,31 @@ export default class ContactsForm extends JetView {
 				this.image.setValues({Photo: ""});
 			}
 			this.$$("header").setValues({action});
-			this.$$("button").setValue(action);
+			this.$$("button").setValue(buttonAction);
 		});
 	}
 
 	closeForm(id) {
 		this.form.clear();
 		this.form.clearValidation();
-		const userId = this.getParam("id", true);
-		if (id === "Cancel" && userId) {
-			this.show(`/top/contacts?id=${userId}/details`);
-		}
-		else if (Number.isInteger(id)) {
+		if (id) {
 			this.show(`/top/contacts?id=${id}/details`);
+			return;
 		}
-		else {
-			const firstId = contacts.getFirstId();
-			this.show(`/top/contacts?id=${firstId}/details`);
+		const firstId = contacts.getFirstId();
+		this.show(`/top/contacts?id=${firstId}/details`);
+	}
+
+	cancelForm() {
+		this.form.clear();
+		this.form.clearValidation();
+		const id = this.getParam("id", true);
+		if (id) {
+			this.show(`/top/contacts?id=${id}/details`);
+			return;
 		}
+		const firstId = contacts.getFirstId();
+		this.show(`/top/contacts?id=${firstId}/details`);
 	}
 
 	addContact() {

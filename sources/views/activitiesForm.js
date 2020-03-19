@@ -50,7 +50,7 @@ export default class ActivitiesForm extends JetView {
 		}
 		if (id && add && contacts.exists(id)) {
 			this.$$("combo").setValue(id);
-			this.$$("combo").define("readonly", true);
+			this.$$("combo").disable();
 		}
 
 		this.getRoot().show();
