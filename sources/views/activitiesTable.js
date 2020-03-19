@@ -165,6 +165,6 @@ export default class ActivitiesTable extends JetView {
 
 	showForm() {
 		const id = this.getParam("id", true);
-		this.activityForm.showForm(id, true);
+		this.activityForm.showForm(false, id);
 	}
 }

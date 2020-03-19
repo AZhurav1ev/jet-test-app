@@ -43,21 +43,22 @@ export default class ActivitiesForm extends JetView {
 		this.form = this.$$("activitiesForm");
 	}
 
-	showForm(id, add) {
-		if (id && !add && activities.exists(id)) {
-			const item = activities.getItem(id);
+	showForm(activityId, contactId) {
+		if (activityId && activities.exists(activityId)) {
+			const item = activities.getItem(activityId);
 			this.form.setValues(item);
 		}
-		if (id && add && contacts.exists(id)) {
-			this.$$("combo").setValue(id);
+		if (contactId && contacts.exists(contactId)) {
+			this.$$("combo").setValue(contactId);
 			this.$$("combo").disable();
 		}
 
 		this.getRoot().show();
 
-		const action = id && add ? "Add" : "Edit";
+		const action = activityId ? "Edit" : "Add";
+		const buttonAction = action === "Edit" ? "Save" : "Add";
 		this.$$("header").setValues({action});
-		this.$$("button").setValue(action);
+		this.$$("button").setValue(buttonAction);
 	}
 
 	closeForm() {
