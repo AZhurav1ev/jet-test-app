@@ -7,6 +7,7 @@ import ContactData from "./contactData";
 
 export default class Details extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const details = {
 			view: "template",
 			localId: "userDetails",
@@ -44,8 +45,8 @@ export default class Details extends JetView {
 						{
 							view: "button",
 							css: "webix_primary",
-							width: 100,
-							label: "Delete",
+							width: 150,
+							label: _("Delete"),
 							type: "icon",
 							icon: "wxi-trash",
 							click: () => this.deleteContact()
@@ -53,8 +54,8 @@ export default class Details extends JetView {
 						{
 							view: "button",
 							css: "webix_primary",
-							width: 100,
-							label: "Edit",
+							width: 150,
+							label: _("Edit"),
 							type: "icon",
 							icon: "wxi-pencil",
 							click: () => this.editContact()

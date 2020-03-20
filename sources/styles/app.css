@@ -62,3 +62,7 @@
 	width: 150px;
 	margin: 15px 0 0 60px;
 }
+
+.contacts_filterInput input[placeholder] {
+	font-style: italic;
+}

@@ -7,6 +7,7 @@ import {activitiesTypes} from "../models/activitiesTypes";
 
 export default class ContactData extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const activitiesTable = {
 			rows: [
 				{
@@ -32,7 +33,16 @@ export default class ContactData extends JetView {
 					css: "activities_button",
 					cols: [
 						{},
-						{view: "button", value: "+Add activity", css: "webix_primary", width: 150, click: () => this.showActivityEditor()}
+						{
+							view: "button",
+							value: "Add",
+							css: "webix_primary",
+							width: 220,
+							label: _("Add activity"),
+							type: "icon",
+							icon: "wxi-plus-circle",
+							click: () => this.showActivityEditor()
+						}
 					]
 				}
 			]
@@ -49,9 +59,9 @@ export default class ContactData extends JetView {
 							select: true,
 							scroll: "auto",
 							columns: [
-								{id: "Name", header: "Name", fillspace: true, sort: "string"},
-								{id: "Date", header: "Change Date", format: webix.Date.dateToStr("%d %M %Y"), sort: "date"},
-								{id: "Size", header: "Size", sort: this.sortBySize},
+								{id: "Name", header: _("Name"), fillspace: true, sort: "string"},
+								{id: "Date", header: _("Change Date"), format: webix.Date.dateToStr("%d %M %Y"), sort: "date"},
+								{id: "Size", header: _("Size"), sort: this.sortBySize},
 								{id: "delete", header: "", width: 50, template: "<span class='webix_icon wxi-trash'></span>"}
 							],
 							onClick: {
@@ -66,7 +76,7 @@ export default class ContactData extends JetView {
 						{},
 						{
 							view: "uploader",
-							label: "Upload file",
+							label: _("Upload file"),
 							localId: "fileUploader",
 							autosend: false,
 							css: "webix_primary",
@@ -86,14 +96,14 @@ export default class ContactData extends JetView {
 					view: "tabbar",
 					localId: "tabbar",
 					options: [
-						{value: "Activities"},
-						{value: "Files"}
+						{value: _("Activities")},
+						{value: _("Files")}
 					]
 				},
 				{
 					cells: [
-						{localId: "Activities", rows: [activitiesTable]},
-						{localId: "Files", rows: [filesTable]}
+						{localId: _("Activities"), rows: [activitiesTable]},
+						{localId: _("Files"), rows: [filesTable]}
 					]
 				}
 			]
