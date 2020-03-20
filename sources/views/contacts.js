@@ -4,29 +4,31 @@ import {contacts} from "../models/contacts";
 export default class Contacts extends JetView {
 	config() {
 		return {
-			rows: [
+			cols: [
 				{
-					cols: [
+					type: "clean",
+					rows: [
 						{
 							view: "list",
 							localId: "contactsList",
 							width: 250,
-							scroll: false,
+							scroll: "auto",
 							select: true,
 							type: {
 								height: 62
 							},
 							template: contact => `
-								<image class="user_image" src=${contact.image || "https://ru.seaicons.com/wp-content/uploads/2015/06/Users-User-Male-4-icon.png"} />
+								<image class="user_image" src=${contact.Photo || "https://ru.seaicons.com/wp-content/uploads/2015/06/Users-User-Male-4-icon.png"} />
 								<div class="user_block">
 									<span class="user_credentials"><b>${contact.FirstName || "-"} ${contact.LastName || "-"}</b></span>
 									<span class="user_credentials"><small>${contact.Job || "-"}</small></span>
 								</div>
 							`
 						},
-						{$subview: true}
+						{view: "button", value: "+ AddContact", width: 150, css: "webix_primary", align: "center", click: () => this.addContact()}
 					]
-				}
+				},
+				{$subview: true}
 			]
 		};
 	}
@@ -44,5 +46,20 @@ export default class Contacts extends JetView {
 			this.setParam("id", id, true);
 			this.show("./details");
 		});
+	}
+
+	urlChange() {
+		let id = this.getParam("id");
+		if (id && contacts.exists(id)) {
+			this.list.select(id);
+		}
+		if (id && !contacts.exists(id)) {
+			this.list.unselectAll();
+		}
+	}
+
+	addContact() {
+		this.list.unselectAll();
+		this.show("/top/contacts/contactsForm");
 	}
 }

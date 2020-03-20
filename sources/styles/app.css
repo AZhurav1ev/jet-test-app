@@ -53,3 +53,12 @@
 	background-color: white;
 	border: .5px solid lightgray;
 }
+
+.contactsForm_header{
+	margin-top: 10px;
+}
+
+.contactsForm_userImage{
+	width: 150px;
+	margin: 15px 0 0 60px;
+}
