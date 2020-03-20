@@ -3,7 +3,7 @@ import {contacts} from "../models/contacts";
 import {statuses} from "../models/statuses";
 import {activities} from "../models/activities";
 import {contactsData} from "../models/contactsData";
-import ActivitiesTable from "./activitiesTable";
+import ContactData from "./contactData";
 
 export default class Details extends JetView {
 	config() {
@@ -75,7 +75,7 @@ export default class Details extends JetView {
 						buttons
 					]
 				},
-				ActivitiesTable
+				ContactData
 			]
 		};
 	}
@@ -87,7 +87,7 @@ export default class Details extends JetView {
 		]).then(() => {
 			const id = this.getParam("id", true);
 			if (id && contacts.exists(id)) {
-				const contact = contacts.getItem(id);
+				const contact = webix.copy(contacts.getItem(id));
 				contact.Status = statuses.getItem(contact.StatusID).Value;
 				this.$$("userDetails").setValues(contact);
 			}
@@ -100,7 +100,7 @@ export default class Details extends JetView {
 
 	collectionRemover(collection, userId) {
 		collection
-			.find(item => Number(item.ContactID) === userId)
+			.find(item => String(item.ContactID) === String(userId))
 			.forEach(item => collection.remove(item.id));
 	}
 

@@ -5,7 +5,7 @@ import {activities} from "../models/activities";
 import {contactsData} from "../models/contactsData";
 import {activitiesTypes} from "../models/activitiesTypes";
 
-export default class ActivitiesTable extends JetView {
+export default class ContactData extends JetView {
 	config() {
 		const activitiesTable = {
 			rows: [
@@ -32,7 +32,7 @@ export default class ActivitiesTable extends JetView {
 					css: "activities_button",
 					cols: [
 						{},
-						{view: "button", value: "+Add activity", css: "webix_primary", width: 150, click: () => this.showForm()}
+						{view: "button", value: "+Add activity", css: "webix_primary", width: 150, click: () => this.showActivityForm()}
 					]
 				}
 			]
@@ -131,10 +131,10 @@ export default class ActivitiesTable extends JetView {
 			activities.waitData,
 			activitiesTypes.waitData
 		]).then(() => {
-			const id = +this.getParam("id", true);
+			const id = this.getParam("id", true);
 			if (id && contacts.exists(id)) {
-				activities.data.filter(activity => +activity.ContactID === id);
-				contactsData.data.filter(data => data.ContactID === id);
+				activities.data.filter(activity => String(activity.ContactID) === String(id));
+				contactsData.data.filter(data => String(data.ContactID) === String(id));
 			}
 		});
 	}
@@ -157,14 +157,17 @@ export default class ActivitiesTable extends JetView {
 		}
 	}
 
-	editItem(id) {
-		if (id) {
-			this.activityForm.showForm(id);
+	editItem(activityId) {
+		const contactId = this.getParam("id", true);
+		if (activityId && contactId) {
+			this.activityForm.showForm(activityId, contactId);
 		}
 	}
 
-	showForm() {
-		const id = this.getParam("id", true);
-		this.activityForm.showForm(false, id);
+	showActivityForm() {
+		const contactId = this.getParam("id", true);
+		if (contactId) {
+			this.activityForm.showForm(false, contactId);
+		}
 	}
 }

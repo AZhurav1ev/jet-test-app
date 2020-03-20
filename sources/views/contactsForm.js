@@ -113,10 +113,10 @@ export default class ContactsForm extends JetView {
 		this.form = this.$$("contactsForm");
 		this.image = this.$$("userImage");
 		this.reader = new FileReader();
+		this.reader.onload = () => this.image.setValues({Photo: this.reader.result});
 
 		this.$$("imageUploader").attachEvent("onBeforeFileAdd", (upload) => {
 			this.reader.readAsDataURL(upload.file);
-			this.reader.onload = () => this.image.setValues({Photo: this.reader.result});
 		});
 	}
 
@@ -135,9 +135,9 @@ export default class ContactsForm extends JetView {
 			}
 			if (!id) {
 				this.form.clear();
-				this.form.clearValidation();
-				this.image.setValues({Photo: ""});
+				this.deletePhoto();
 			}
+			this.form.clearValidation();
 			this.$$("header").setValues({action});
 			this.$$("button").setValue(buttonAction);
 		});
@@ -155,15 +155,8 @@ export default class ContactsForm extends JetView {
 	}
 
 	cancelForm() {
-		this.form.clear();
-		this.form.clearValidation();
 		const id = this.getParam("id", true);
-		if (id) {
-			this.show(`/top/contacts?id=${id}/details`);
-			return;
-		}
-		const firstId = contacts.getFirstId();
-		this.show(`/top/contacts?id=${firstId}/details`);
+		this.closeForm(id);
 	}
 
 	addContact() {
