@@ -24,7 +24,7 @@ export default class ContactData extends JetView {
 						{id: "delete", header: "", width: 50, template: "<span class='webix_icon wxi-trash'></span>"}
 					],
 					onClick: {
-						"wxi-pencil": (e, id) => this.editItem(id),
+						"wxi-pencil": (e, id) => this.showActivityEditor(id),
 						"wxi-trash": (e, id) => this.deleteActivity(id)
 					}
 				},
@@ -32,7 +32,7 @@ export default class ContactData extends JetView {
 					css: "activities_button",
 					cols: [
 						{},
-						{view: "button", value: "+Add activity", css: "webix_primary", width: 150, click: () => this.showActivityForm()}
+						{view: "button", value: "+Add activity", css: "webix_primary", width: 150, click: () => this.showActivityEditor()}
 					]
 				}
 			]
@@ -157,17 +157,9 @@ export default class ContactData extends JetView {
 		}
 	}
 
-	editItem(activityId) {
+	showActivityEditor(activityId) {
 		const contactId = this.getParam("id", true);
-		if (activityId && contactId) {
-			this.activityForm.showForm(activityId, contactId);
-		}
-	}
-
-	showActivityForm() {
-		const contactId = this.getParam("id", true);
-		if (contactId) {
-			this.activityForm.showForm(false, contactId);
-		}
+		if (activityId && contactId) this.activityForm.showForm(activityId, contactId);
+		if (!activityId && contactId) this.activityForm.showForm(false, contactId);
 	}
 }

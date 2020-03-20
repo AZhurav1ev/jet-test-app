@@ -1,5 +1,5 @@
 const dateToStr = webix.Date.dateToStr("%Y-%m-%d %H:%i");
-const strToDate = webix.Date.strToDate("%Y-%m-%d %H:%i");
+const strToDate = webix.Date.strToDate("%Y-%m-%d");
 
 export const contacts = new webix.DataCollection({
 	url: "http://localhost:8096/api/v1/contacts/",
