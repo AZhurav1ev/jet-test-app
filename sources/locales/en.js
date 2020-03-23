@@ -31,6 +31,10 @@ export default {
 	Today: "Today",
 	Tomorrow: "Tomorrow",
 	"This week": "This week",
-	"This month": "This month"
-
+	"This month": "This month",
+	"Activity type": "Activity type",
+	"Due Date": "Due Date",
+	Details: "Details",
+	Contact: "Contact",
+	Type: "Type"
 };

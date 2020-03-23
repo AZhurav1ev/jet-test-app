@@ -5,6 +5,7 @@ import {activities} from "../models/activities";
 
 export default class ActivitiesForm extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "window",
 			modal: true,
@@ -17,21 +18,21 @@ export default class ActivitiesForm extends JetView {
 				view: "form",
 				localId: "activitiesForm",
 				elements: [
-					{view: "textarea", label: "Details", name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: "Please write some details", required: true},
-					{view: "combo", label: "Type", name: "TypeID", options: activitiesTypes, invalidMessage: "Please select type", required: true},
-					{view: "combo", label: "Contact", localId: "combo", value: "", name: "ContactID", options: contacts, invalidMessage: "Please select contact", required: true},
+					{view: "textarea", label: _("Details"), name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: _("Please write some details"), required: true},
+					{view: "combo", label: _("Type"), name: "TypeID", options: activitiesTypes, invalidMessage: _("Please select type"), required: true},
+					{view: "combo", label: _("Contact"), localId: "combo", value: "", name: "ContactID", options: contacts, invalidMessage: _("Please select contact"), required: true},
 					{
 						cols: [
-							{view: "datepicker", name: "DueDate", type: "date", value: new Date(), format: "%d  %M %Y", invalidMessage: "Please select date", required: true},
-							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: "Please select time", required: true}
+							{view: "datepicker", name: "DueDate", type: "date", value: new Date(), format: "%d  %M %Y", invalidMessage: _("Please select date"), required: true},
+							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: _("Please select time"), required: true}
 						]
 					},
-					{view: "checkbox", label: "Completed", name: "State", checkValue: "Close", uncheckValue: "Open"},
+					{view: "checkbox", label: _("Completed"), name: "State", checkValue: "Close", uncheckValue: "Open"},
 					{
 						cols: [
 							{},
-							{view: "button", value: "Add", localId: "button", css: "webix_primary", autoWidth: true, click: () => this.addItem()},
-							{view: "button", label: "Cancel", css: "webix_primary", autoWidth: true, click: () => this.closeForm()}
+							{view: "button", value: _("Add"), localId: "button", css: "webix_primary", autoWidth: true, click: () => this.addItem()},
+							{view: "button", label: _("Cancel"), css: "webix_primary", autoWidth: true, click: () => this.closeForm()}
 						]
 					}
 				]
