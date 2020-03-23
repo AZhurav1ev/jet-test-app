@@ -55,5 +55,14 @@ export default {
 	"Joining date": "Регистрация",
 	"Change photo": "Изменить фото",
 	"Delete photo": "Добавить фото",
-	"Add new item": "Добавить"
+	"Add new item": "Добавить",
+	"Please enter your first name": "Пожалуйста, введите имя",
+	"Please enter your last name": "Пожалуйста, введите фамилию",
+	"Please select status": "Пожалуйста, выберите статус",
+	"Please enter your email": "Пожалуйста, введите почту",
+	"Please select date": "Пожалуйста, выберите дату",
+	"Please write some details": "Пожалкйста, добавьте описание",
+	"Please select type": "Пожалуйста, выберите тип",
+	"Please select contact": "Пожалуйста, выберите контакс",
+	"Please select time": "Пожалуйста, выберите время"
 };

@@ -55,5 +55,14 @@ export default {
 	"Joining date": "Joining date",
 	"Change photo": "Change photo",
 	"Delete photo": "Delete photo",
-	"Add new item": "Add new item"
+	"Add new item": "Add new item",
+	"Please enter your first name": "Please enter your first name",
+	"Please enter your last name": "Please enter your last name",
+	"Please select status": "Please select status",
+	"Please enter your email": "Please enter your email",
+	"Please select date": "Please select date",
+	"Please write some details": "Please write some details",
+	"Please select type": "Please select type",
+	"Please select contact": "Please select contact",
+	"Please select time": "Please select time"
 };
