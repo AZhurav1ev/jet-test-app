@@ -11,7 +11,7 @@ export default class ActivitiesForm extends JetView {
 			modal: true,
 			position: "center",
 			head: {
-				template: "#action# activity",
+				template: `#action# ${_("activity")}`,
 				localId: "header"
 			},
 			body: {
@@ -27,7 +27,7 @@ export default class ActivitiesForm extends JetView {
 							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: _("Please select time"), required: true}
 						]
 					},
-					{view: "checkbox", label: _("Completed"), name: "State", checkValue: "Close", uncheckValue: "Open"},
+					{view: "checkbox", label: _("Completed"), labelWidth: 100, name: "State", checkValue: "Close", uncheckValue: "Open"},
 					{
 						cols: [
 							{},
@@ -45,6 +45,7 @@ export default class ActivitiesForm extends JetView {
 	}
 
 	showForm(activityId, contactId) {
+		const _ = this.app.getService("locale")._;
 		if (activityId && activities.exists(activityId)) {
 			const item = activities.getItem(activityId);
 			this.form.setValues(item);
@@ -56,8 +57,8 @@ export default class ActivitiesForm extends JetView {
 
 		this.getRoot().show();
 
-		const action = activityId ? "Edit" : "Add";
-		const buttonAction = action === "Edit" ? "Save" : "Add";
+		const action = activityId ? _("Edit") : _("Add");
+		const buttonAction = activityId ? _("Save") : _("Add");
 		this.$$("header").setValues({action});
 		this.$$("button").setValue(buttonAction);
 	}

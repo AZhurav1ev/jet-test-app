@@ -74,6 +74,7 @@ export default class Activities extends JetView {
 	}
 
 	init() {
+		const _ = this.app.getService("locale")._;
 		this.activityForm = this.ui(activitiesForm);
 		webix.promise.all([
 			contacts.waitData,
@@ -95,23 +96,17 @@ export default class Activities extends JetView {
 					const currentWeekStart = webix.Date.weekStart(currentDate);
 					const currentMonthStart = webix.Date.monthStart(currentDate);
 					switch (filter) {
-						case "Overdue":
-						case "Просроченные":
+						case _("Overdue"):
 							return activity.DueDate < today && status !== "Close";
-						case "Completed":
-						case "Выполненные":
+						case _("Completed"):
 							return status !== "Open";
-						case "Today":
-						case "На сегодня":
+						case _("Today"):
 							return webix.Date.equal(webix.Date.datePart(activity.DueDate), today) && status !== "Close";
-						case "Tomorrow":
-						case "На завтра":
+						case _("Tomorrow"):
 							return webix.Date.equal(webix.Date.datePart(activity.DueDate), tomorrow);
-						case "This week":
-						case "На этой неделе":
+						case _("This week"):
 							return activity.DueDate > currentWeekStart && activity.DueDate < webix.Date.add(currentWeekStart, 7, "day", true);
-						case "This month":
-						case "В этом месяце":
+						case _("This month"):
 							return activity.DueDate > currentMonthStart && activity.DueDate < webix.Date.add(currentMonthStart, 1, "month", true);
 						default:
 							return true;

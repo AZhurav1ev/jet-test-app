@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 import {activitiesTypes} from "../models/activitiesTypes";
-import {iconTypes} from "../models/iconTypes";
 import settingsForm from "./settingsForm";
+import {statuses} from "../models/statuses";
 
 export default class SettingsTable extends JetView {
 	constructor(app, name, data) {
@@ -11,34 +11,17 @@ export default class SettingsTable extends JetView {
 	}
 
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
 					view: "datatable",
 					localId: "table",
 					scroll: "auto",
-					select: "cell",
-					editable: true,
-					// editaction: "dblclick",
+					select: true,
 					columns: [
-						{id: "Value", header: "Activity", fillspace: true, editor: "text"},
-						{
-							id: "Icon",
-							header: "Icon",
-							fillspace: true,
-							localId: "icon",
-							template: obj => `<span class='mdi mdi-${obj.Icon}'></span>`,
-							// template: "<span class='mdi mdi-#value#'></span>",
-							editor: "richselect",
-							collection: iconTypes,
-							suggest: {
-								template: "<span class='mdi mdi-#value#'></span>",
-								body: {
-									// template: obj => `<span class='mdi mdi-${obj.Icon}'></span> ${obj.Value}`
-									template: "<span class='mdi mdi-#value#'></span> #value#"
-								}
-							}
-						},
+						{id: "Value", header: _("Activity"), fillspace: true, editor: "text"},
+						{id: "Icon", header: _("Icon"), fillspace: true, template: obj => `<span class='mdi mdi-${obj.Icon}'></span>`},
 						{id: "edit", header: "", width: 50, template: "<span class='webix_icon wxi-pencil'></span>"},
 						{id: "delete", header: "", width: 50, template: "<span class='webix_icon wxi-trash'></span>"}
 					],
@@ -55,7 +38,7 @@ export default class SettingsTable extends JetView {
 							view: "button",
 							css: "webix_primary",
 							width: 150,
-							label: "Add new item",
+							label: _("Add new item"),
 							type: "icon",
 							icon: "wxi-plus-circle",
 							click: () => this.addItem()
@@ -67,16 +50,8 @@ export default class SettingsTable extends JetView {
 	}
 
 	init() {
-		this._componentData.waitData
-			.then(() => {
-				this.$$("table").sync(this._componentData);
-			});
-
+		this.$$("table").sync(this._componentData);
 		this.form = this.ui(settingsForm);
-		// this.$$("table").attachEvent("onAfterEditStop", (state, editor) => {
-		// 	let item = activitiesTypes.getItem(editor.row);
-		// 	item.Icon = iconTypes.getItem(+state.value).Icon;
-		// });
 	}
 
 	openEditor(id) {
@@ -84,16 +59,19 @@ export default class SettingsTable extends JetView {
 	}
 
 	deleteItem(id) {
-		if (id && activitiesTypes.exists(id)) {
-			webix.confirm("Do you want to delete this activity?")
+		const _ = this.app.getService("locale")._;
+		if (id) {
+			const typeName = this._name === "Activity" ? _("activity") : _("status");
+			webix.confirm(`${_("Do you want to delete this")} ${typeName}?`)
 				.then(() => {
-					activitiesTypes.remove(id);
+					if (this._name === "Activity") {
+						activitiesTypes.remove(id);
+						return false;
+					}
+					statuses.remove(id);
+					return false;
 				});
 		}
-	}
-
-	transformIcon(icon) {
-		return `<span class='mdi mdi-${icon}'></span>`;
 	}
 
 	addItem() {

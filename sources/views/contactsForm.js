@@ -4,12 +4,13 @@ import {statuses} from "../models/statuses";
 
 export default class ContactsForm extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const header = {
 			paddingX: 30,
 			cols: [
 				{
 					localId: "header",
-					template: "<h2 class='contactsForm_header'>#action# contact</h2>",
+					template: `<h2 class='contactsForm_header'>#action# ${_("contact")}</h2>`,
 					type: "clean",
 					height: 50
 				},
@@ -20,24 +21,24 @@ export default class ContactsForm extends JetView {
 		const leftPart = {
 			paddingX: 30,
 			rows: [
-				{view: "text", labelWidth: 100, label: "First Name", name: "FirstName", invalidMessage: "Please enter your first name", required: true},
-				{view: "text", labelWidth: 100, label: "Last Name", name: "LastName", invalidMessage: "Please enter your last name", required: true},
-				{view: "datepicker", labelWidth: 100, label: "Joining date", name: "StartDate", value: new Date(), format: "%d %M %Y", invalidMessage: "Please select date"},
-				{view: "combo", labelWidth: 100, label: "Status", name: "StatusID", value: 1, options: statuses, invalidMessage: "Please select status", required: true},
-				{view: "text", labelWidth: 100, label: "Job", name: "Job", invalidMessage: "Please enter your current job"},
-				{view: "text", labelWidth: 100, label: "Company", name: "Company", invalidMessage: "Please enter your company name"},
-				{view: "text", labelWidth: 100, label: "Website", name: "Website", invalidMessage: "Please enter your website"},
-				{view: "textarea", labelWidth: 100, label: "Address", name: "Address", invalidMessage: "Please enter your address"}
+				{view: "text", labelWidth: 100, label: _("First Name"), name: "FirstName", invalidMessage: "Please enter your first name", required: true},
+				{view: "text", labelWidth: 100, label: _("Last Name"), name: "LastName", invalidMessage: "Please enter your last name", required: true},
+				{view: "datepicker", labelWidth: 100, label: _("Joining date"), name: "StartDate", value: new Date(), format: "%d %M %Y", invalidMessage: "Please select date"},
+				{view: "combo", labelWidth: 100, label: _("Status"), name: "StatusID", value: 1, options: statuses, invalidMessage: "Please select status", required: true},
+				{view: "text", labelWidth: 100, label: _("Job"), name: "Job", invalidMessage: "Please enter your current job"},
+				{view: "text", labelWidth: 100, label: _("Company"), name: "Company", invalidMessage: "Please enter your company name"},
+				{view: "text", labelWidth: 100, label: _("Website"), name: "Website", invalidMessage: "Please enter your website"},
+				{view: "textarea", labelWidth: 100, label: _("Address"), name: "Address", invalidMessage: "Please enter your address"}
 			]
 		};
 
 		const rightTopPart = {
 			paddingX: 30,
 			rows: [
-				{view: "text", label: "Email", name: "Email", invalidMessage: "Please enter your email", required: true},
+				{view: "text", label: _("Email"), name: "Email", invalidMessage: "Please enter your email", required: true},
 				{view: "text", label: "Skype", name: "Skype", invalidMessage: "Please enter youк Skype name"},
-				{view: "text", label: "Phone", name: "Phone", invalidMessage: "Phone number must be digits"},
-				{view: "datepicker", label: "Birthday", name: "Birthday", type: "date", invalidMessage: "Please select date", required: true}
+				{view: "text", label: _("Phone"), name: "Phone", invalidMessage: "Phone number must be digits"},
+				{view: "datepicker", label: _("Birthday"), name: "Birthday", type: "date", invalidMessage: "Please select date", required: true}
 			]
 		};
 
@@ -57,7 +58,7 @@ export default class ContactsForm extends JetView {
 						{},
 						{
 							view: "uploader",
-							value: "Change photo",
+							value: _("Change photo"),
 							localId: "imageUploader",
 							link: "userImage",
 							accept: "image/png, image/gif, image/jpg, image/jpeg",
@@ -67,7 +68,7 @@ export default class ContactsForm extends JetView {
 						},
 						{
 							view: "button",
-							value: "Delete photo",
+							value: _("Delete photo"),
 							width: 150,
 							click: () => this.deletePhoto()
 						}
@@ -79,8 +80,8 @@ export default class ContactsForm extends JetView {
 		const footer = {
 			cols: [
 				{},
-				{view: "button", value: "Cancel", css: "webix_primary", width: 150, click: () => this.cancelForm()},
-				{view: "button", localId: "button", value: "Add", css: "webix_primary", width: 150, click: () => this.addContact()}
+				{view: "button", value: _("Cancel"), css: "webix_primary", width: 150, click: () => this.cancelForm()},
+				{view: "button", localId: "button", css: "webix_primary", width: 150, click: () => this.addContact()}
 			]
 		};
 
@@ -121,13 +122,14 @@ export default class ContactsForm extends JetView {
 	}
 
 	urlChange() {
+		const _ = this.app.getService("locale")._;
 		webix.promise.all([
 			contacts.waitData,
 			statuses.waitData
 		]).then(() => {
 			const id = this.getParam("id", true);
-			const action = id ? "Edit" : "Add";
-			const buttonAction = action === "Edit" ? "Save" : "Add";
+			const action = id ? _("Edit") : _("Add");
+			const buttonAction = id ? _("Save") : _("Add");
 			if (id && contacts.exists(id)) {
 				const item = contacts.getItem(id);
 				this.form.setValues(item);
