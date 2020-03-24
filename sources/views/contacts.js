@@ -3,11 +3,21 @@ import {contacts} from "../models/contacts";
 
 export default class Contacts extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			cols: [
 				{
 					type: "clean",
 					rows: [
+						{
+							view: "text",
+							css: "contacts_filterInput",
+							localId: "contactsFilterInput",
+							placeholder: _("type to find matching contacts"),
+							on: {
+								onTimedKeyPress: () => this.contactsFilter()
+							}
+						},
 						{
 							view: "list",
 							localId: "contactsList",
@@ -25,7 +35,7 @@ export default class Contacts extends JetView {
 								</div>
 							`
 						},
-						{view: "button", value: "+ AddContact", width: 150, css: "webix_primary", align: "center", click: () => this.addContact()}
+						{view: "button", value: _("+AddContact"), width: 200, css: "webix_primary", align: "center", click: () => this.addContact()}
 					]
 				},
 				{$subview: true}
@@ -61,5 +71,12 @@ export default class Contacts extends JetView {
 	addContact() {
 		this.list.unselectAll();
 		this.show("/top/contacts/contactsForm");
+	}
+
+	contactsFilter() {
+		const value = this.$$("contactsFilterInput").getValue().toLowerCase();
+		this.list.filter(contact => ["FirstName", "LastName", "Email", "Skype", "Job", "Company", "Address"]
+			.some(key => contact[key].toLowerCase().indexOf(value) !== -1) ||
+			webix.i18n.longDateFormatStr(contact.Birthday).toLowerCase().indexOf(value) !== -1);
 	}
 }

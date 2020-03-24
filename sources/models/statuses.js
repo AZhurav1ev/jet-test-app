@@ -4,6 +4,11 @@ export const statuses = new webix.DataCollection({
 	scheme: {
 		$init: (obj) => {
 			obj.value = obj.Value;
+		},
+		$save: (obj) => {
+			obj.Value = obj.value;
+			delete obj.value;
+			delete obj.type;
 		}
 	}
 });

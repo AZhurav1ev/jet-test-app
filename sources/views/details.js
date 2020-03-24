@@ -7,6 +7,7 @@ import ContactData from "./contactData";
 
 export default class Details extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const details = {
 			view: "template",
 			localId: "userDetails",
@@ -18,7 +19,9 @@ export default class Details extends JetView {
 					<div class="details_body">
 						<div class="details_image">
 							<image src="${contact.Photo || "https://ru.seaicons.com/wp-content/uploads/2015/06/Users-User-Male-4-icon.png"}" />
-							<p class="status">${contact.Status || "-"}</p>
+							<p class="status">
+								<span class='mdi mdi-${contact.Icon}'> ${contact.Status || "-"}</span>
+							</p>
 						</div>
 						<div class="details_contacts">
 							<span class="mdi mdi-email"> ${contact.Email || "-"}</span>
@@ -44,8 +47,8 @@ export default class Details extends JetView {
 						{
 							view: "button",
 							css: "webix_primary",
-							width: 100,
-							label: "Delete",
+							width: 150,
+							label: _("Delete"),
 							type: "icon",
 							icon: "wxi-trash",
 							click: () => this.deleteContact()
@@ -53,8 +56,8 @@ export default class Details extends JetView {
 						{
 							view: "button",
 							css: "webix_primary",
-							width: 100,
-							label: "Edit",
+							width: 150,
+							label: _("Edit"),
 							type: "icon",
 							icon: "wxi-pencil",
 							click: () => this.editContact()
@@ -89,6 +92,10 @@ export default class Details extends JetView {
 			if (id && contacts.exists(id)) {
 				const contact = webix.copy(contacts.getItem(id));
 				contact.Status = statuses.getItem(contact.StatusID).Value;
+				contact.Icon = statuses.getItem(contact.StatusID).Icon;
+				if (contact.Icon === "user") {
+					contact.Icon = "sunglasses";
+				}
 				this.$$("userDetails").setValues(contact);
 			}
 		});
