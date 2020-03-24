@@ -32,7 +32,18 @@ export default class Activities extends JetView {
 			scroll: "auto",
 			columns: [
 				{id: "State", header: "", template: "{common.checkbox()}", checkValue: "Close", uncheckValue: "Open", width: 50},
-				{id: "TypeID", header: [_("Activity type"), {content: "selectFilter"}], collection: activitiesTypes, sort: "text"},
+				{
+					id: "TypeID",
+					width: 120,
+					header: [_("Activity type"), {content: "selectFilter"}],
+					collection: activitiesTypes,
+					sort: "text",
+					template: (obj) => {
+						let activity = activitiesTypes.getItem(obj.TypeID).Value;
+						let icon = activitiesTypes.getItem(obj.TypeID).Icon;
+						return `<span class="mdi mdi-${icon}"></span> ${activity} `;
+					}
+				},
 				{id: "DueDate", header: [_("Due Date"), {content: "dateRangeFilter"}], format: webix.i18n.longDateFormatStr, sort: "date", width: 150},
 				{id: "Details", header: [_("Details"), {content: "textFilter"}], template: "#Details#", fillspace: true, sort: "string"},
 				{id: "ContactID", header: [_("Contact"), {content: "selectFilter"}], width: 150, options: contacts, sort: "string"},

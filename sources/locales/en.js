@@ -64,5 +64,8 @@ export default {
 	"Please write some details": "Please write some details",
 	"Please select type": "Please select type",
 	"Please select contact": "Please select contact",
-	"Please select time": "Please select time"
+	"Please select time": "Please select time",
+	"This field can not be empty": "This field can not be empty",
+	"Activity and Status section": "Activity and Status section",
+	"Language section": "Language section"
 };

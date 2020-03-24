@@ -9,7 +9,7 @@ export default class Settings extends JetView {
 		const _ = this.app.getService("locale")._;
 		const segmentedButton = {
 			paddingX: 10,
-			rows: [
+			cols: [
 				{
 					view: "segmented",
 					label: _("Language"),
@@ -25,9 +25,25 @@ export default class Settings extends JetView {
 			]
 		};
 
+		const tableTitle = {
+			height: 50,
+			template: `<h2 class='title'>${_("Activity and Status section")}</h2>`
+		};
+
+		const languageTitle = {
+			height: 50,
+			template: `<h2 class="title">${_("Language section")}</h2>`
+		};
+
 		return {
+			type: "space",
 			rows: [
+				languageTitle,
 				segmentedButton,
+				{
+					height: 100
+				},
+				tableTitle,
 				{
 					view: "tabbar",
 					localId: "tabbar",
@@ -41,7 +57,8 @@ export default class Settings extends JetView {
 						{localId: _("Activity type"), rows: [new SettingsTable(this.app, "Activity", activitiesTypes)]},
 						{localId: _("Status"), rows: [new SettingsTable(this.app, "Status", statuses)]}
 					]
-				}
+				},
+				{}
 			]
 		};
 	}

@@ -19,11 +19,13 @@ export default class SettingsTable extends JetView {
 					localId: "table",
 					scroll: "auto",
 					select: true,
+					autowidth: true,
+					autoheight: true,
 					columns: [
-						{id: "Value", header: _("Activity"), fillspace: true, editor: "text"},
-						{id: "Icon", header: _("Icon"), fillspace: true, template: obj => `<span class='mdi mdi-${obj.Icon}'></span>`},
-						{id: "edit", header: "", width: 50, template: "<span class='webix_icon wxi-pencil'></span>"},
-						{id: "delete", header: "", width: 50, template: "<span class='webix_icon wxi-trash'></span>"}
+						{id: "Value", header: _("Activity"), width: 265, editor: "text"},
+						{id: "Icon", header: _("Icon"), width: 265, template: obj => `<span class='mdi mdi-${obj.Icon}'></span>`},
+						{id: "edit", header: "", width: 70, template: "<span class='webix_icon wxi-pencil'></span>"},
+						{id: "delete", header: "", width: 70, template: "<span class='webix_icon wxi-trash'></span>"}
 					],
 					onClick: {
 						"wxi-pencil": (e, id) => this.openEditor(id),
@@ -31,7 +33,6 @@ export default class SettingsTable extends JetView {
 					}
 				},
 				{
-					css: "activities_button",
 					cols: [
 						{},
 						{
@@ -44,7 +45,8 @@ export default class SettingsTable extends JetView {
 							click: () => this.addItem()
 						}
 					]
-				}
+				},
+				{}
 			]
 		};
 	}

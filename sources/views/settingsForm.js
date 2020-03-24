@@ -18,7 +18,7 @@ export default class SettingsForm extends JetView {
 				view: "form",
 				localId: "settingsForm",
 				elements: [
-					{view: "text", name: "Value", label: _("Type"), width: 300, required: true, invalidMessage: _("Please write some details")},
+					{view: "text", name: "Value", label: _("Type"), width: 300, required: true, invalidMessage: _("This field can not be empty")},
 					{
 						view: "richselect",
 						label: _("Icon"),
@@ -32,7 +32,7 @@ export default class SettingsForm extends JetView {
 							}
 						},
 						required: true,
-						invalidMessage: _("Please write some details")
+						invalidMessage: _("This field can not be empty")
 					},
 					{
 						cols: [

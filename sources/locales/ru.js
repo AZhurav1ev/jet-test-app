@@ -64,5 +64,8 @@ export default {
 	"Please write some details": "Пожалкйста, добавьте описание",
 	"Please select type": "Пожалуйста, выберите тип",
 	"Please select contact": "Пожалуйста, выберите контакс",
-	"Please select time": "Пожалуйста, выберите время"
+	"Please select time": "Пожалуйста, выберите время",
+	"This field can not be empty": "Поле не должно быть пустым",
+	"Activity and Status section": "События и статусы",
+	"Language section": "Выбор языка"
 };

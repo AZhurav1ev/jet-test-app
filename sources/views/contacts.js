@@ -75,18 +75,8 @@ export default class Contacts extends JetView {
 
 	contactsFilter() {
 		const value = this.$$("contactsFilterInput").getValue().toLowerCase();
-		this.list.filter((contact) => {
-			if (
-				contact.value.toLowerCase().indexOf(value) !== -1 ||
-				contact.Email.toLowerCase().indexOf(value) !== -1 ||
-				contact.Skype.toLowerCase().indexOf(value) !== -1 ||
-				contact.Job.toLowerCase().indexOf(value) !== -1 ||
-				contact.Company.toLowerCase().indexOf(value) !== -1 ||
-				webix.i18n.longDateFormatStr(contact.Birthday).toLowerCase().indexOf(value) !== -1 ||
-				contact.Address.toLowerCase().indexOf(value) !== -1) {
-				return contact;
-			}
-			return false;
-		});
+		this.list.filter(contact => ["FirstName", "LastName", "Email", "Skype", "Job", "Company", "Address"]
+			.some(key => contact[key].toLowerCase().indexOf(value) !== -1) ||
+			webix.i18n.longDateFormatStr(contact.Birthday).toLowerCase().indexOf(value) !== -1);
 	}
 }

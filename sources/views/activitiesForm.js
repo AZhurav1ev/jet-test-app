@@ -18,13 +18,13 @@ export default class ActivitiesForm extends JetView {
 				view: "form",
 				localId: "activitiesForm",
 				elements: [
-					{view: "textarea", label: _("Details"), name: "Details", minWidth: 300, maxWidth: 500, invalidMessage: _("Please write some details"), required: true},
+					{view: "textarea", label: _("Details"), name: "Details", minWidth: 400, invalidMessage: _("Please write some details"), required: true},
 					{view: "combo", label: _("Type"), name: "TypeID", options: activitiesTypes, invalidMessage: _("Please select type"), required: true},
 					{view: "combo", label: _("Contact"), localId: "combo", value: "", name: "ContactID", options: contacts, invalidMessage: _("Please select contact"), required: true},
 					{
 						cols: [
-							{view: "datepicker", name: "DueDate", type: "date", value: new Date(), format: "%d  %M %Y", invalidMessage: _("Please select date"), required: true},
-							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: _("Please select time"), required: true}
+							{view: "datepicker", name: "DueDate", type: "date", value: new Date(), format: "%d  %M %Y", invalidMessage: _("Please select date"), required: true, inputHeight: 38},
+							{view: "datepicker", name: "DueTime", type: "time", value: new Date(), invalidMessage: _("Please select time"), required: true, inputHeight: 38}
 						]
 					},
 					{view: "checkbox", label: _("Completed"), labelWidth: 100, name: "State", checkValue: "Close", uncheckValue: "Open"},
