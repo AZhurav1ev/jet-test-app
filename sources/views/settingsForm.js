@@ -18,7 +18,7 @@ export default class SettingsForm extends JetView {
 				view: "form",
 				localId: "settingsForm",
 				elements: [
-					{view: "text", name: "Value", label: _("Type"), width: 300, required: true},
+					{view: "text", name: "Value", label: _("Type"), width: 300, required: true, invalidMessage: _("Please write some details")},
 					{
 						view: "richselect",
 						label: _("Icon"),
@@ -31,7 +31,8 @@ export default class SettingsForm extends JetView {
 								template: obj => `<span class="mdi mdi-${obj.value}"></span> ${obj.value}`
 							}
 						},
-						required: true
+						required: true,
+						invalidMessage: _("Please write some details")
 					},
 					{
 						cols: [
@@ -79,8 +80,8 @@ export default class SettingsForm extends JetView {
 			if (itemData.type === "Status" && !itemData.id) {
 				statuses.add(itemData, 0);
 			}
+			this.closeForm();
 		}
-		this.closeForm();
 	}
 
 	closeForm() {
